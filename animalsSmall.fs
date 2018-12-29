@@ -123,6 +123,7 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
   let mutable animals : array<animal> = List.toArray (List.map(fun m -> upcast m) _board.moose @ (List.map(fun w -> upcast w) _board.wolves))
 
   /// Fisher-Yates shuffle https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+  /// Used to randomize the order in which every animal's action is taken.
   let FYShuffle (arr : 'a array) =
     for i = arr.Length-1 downto 1 do
       let j = rnd.Next(0, i)
@@ -184,9 +185,6 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
   member this.count = _board.moose.Length + _board.wolves.Length
   member this.board = _board
   member this.tick () = 
-    printfn "number of moose is: %d" _board.moose.Length
-    printfn "number of wolves is: %d" _board.wolves.Length 
-    printfn "animals in total: %d" animals.Length 
     let helpTick (a : animal) = 
       if a.position.IsSome then
         assignNeighbours a
