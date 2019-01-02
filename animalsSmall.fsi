@@ -25,6 +25,8 @@ type animal =
     member resetReproduction : unit -> unit
     /// Reduce the reproduction counter by a tick.
     member updateReproduction : unit -> unit
+    /// The surrounding tiles fo an animal.
+    member neighbours : neighbour list
   end
 /// A moose is an animal with methods for updating its age and producing offspring.
 type moose =
@@ -35,6 +37,8 @@ type moose =
     new : repLen:int -> moose
     /// Perform a tick for this moose, i.e., call updateReproduction.
     member tick : unit -> moose option
+    /// Moose gives birth
+    member reproduce : unit -> moose
   end
 /// A wolf is an animal with hunger and methods for updating its age and hunger and for reproducing offspring. If the wolf has not eaten in a specified number of ticks, then it is taken off the board.
 type wolf =
@@ -52,6 +56,8 @@ type wolf =
     member updateHunger : unit -> unit
     /// Perform a tick for this wolf, i.e., call updateReproduction and updateHunger and possibly returns cub.
     member tick : unit -> wolf option
+    /// Kill and eat moose
+    member kill : unit -> position option
   end
 /// A square board with length width. The board is implicitly represented by its width and the coordinates in the animals.
 type board =

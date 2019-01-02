@@ -190,7 +190,7 @@ type environment (boardWidth : int, NMooses : int, mooseRepLen : int, NWolves : 
         assignNeighbours a
         match a.symbol with 
         | 'm' -> 
-          let m = a :?> moose                                                               //the :?> operator dynamically downcasts to given type.
+          let m = a :?> moose                   //the :?> operator dynamically downcasts to given type.
           let offspring = m.tick()
           if offspring.IsSome then _board.moose <- offspring.Value :: _board.moose; animals <- Array.append animals [|(downcast offspring.Value)|]
         | 'w' -> 
